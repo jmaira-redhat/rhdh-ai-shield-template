@@ -5,8 +5,9 @@ metadata:
   title: Secure AI Assistant Template
   description: Scaffolds a Dev Space with a Project Shield (ExternalSecrets) pre-configured.
 spec:
-  owner: ai-platform-team
+  #owner: ai-platform-team
   type: service
+  owner: user:default/admin
 
   parameters:
     - title: Project Details
