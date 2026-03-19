@@ -1,0 +1,17 @@
+schemaVersion: 2.2.0
+metadata:
+  name: {{ values.component_id }}
+# 🔗 INHERIT from your working, tested Devfile
+parent:
+  uri: https://raw.githubusercontent.com/jmaira-redhat/aicodersheild/refs/heads/main/devfile.yaml
+
+# 🛡️ ADD the Shielded Environment Variables
+# These act as placeholders that the ExternalSecret will fill
+components:
+  - name: tooling-container
+    container:
+      env:
+        - name: ANTHROPIC_API_KEY
+          value: "REPLACE_ME_BY_EXTERNAL_SECRET"
+        - name: PROJECT_NAME
+          value: {{ values.component_id | dump }}

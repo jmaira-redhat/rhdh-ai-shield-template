@@ -1,0 +1,55 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: secure-ai-template
+  title: Secure AI Assistant Template
+  description: Scaffolds a Dev Space with a Project Shield (ExternalSecrets) pre-configured.
+spec:
+  owner: ai-platform-team
+  type: service
+
+  parameters:
+    - title: Project Details
+      properties:
+        component_id:
+          title: Name of your AI Project
+          type: string
+          description: Unique name for the repo and namespace.
+        owner:
+          title: Owner
+          type: string
+          description: Team responsible for this service.
+          ui:field: OwnerPicker
+
+  steps:
+    - id: template
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          component_id: ${{ parameters.component_id }}
+
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: This is ${{ parameters.component_id }}
+        repoUrl: github.com?owner=your-org&repo=${{ parameters.component_id }}
+
+    - id: register
+      name: Register in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.remoteRepoUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+    # 🛡️ THE SHIELD STEP (The "Gold" in your blog)
+    - id: create-namespace
+      name: Provision Secure Namespace
+      action: kubernetes:create-namespace
+      input:
+        name: ${{ parameters.component_id }}-devspaces
+        # You would use a custom action or ArgoCD sync here to 
+        # apply the SecretStore and ExternalSecret automatically.
