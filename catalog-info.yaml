@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: ai-platform-team
+  description: The team responsible for the Project Shield AI API Keys.
+spec:
+  type: team
+  children: []
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: project-shield-template-location
+spec:
+  type: url
+  # This points the catalog to your template definition in the same repo
+  target: ./template.yaml
