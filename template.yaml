@@ -37,7 +37,7 @@ spec:
       input:
         allowedHosts: ['github.com']
         description: This is ${{ parameters.component_id }}
-        repoUrl: github.com?owner=your-org&repo=${{ parameters.component_id }}
+        repoUrl: github.com?owner=jmaira-redhat&repo=${{ parameters.component_id }}
 
     - id: register
       name: Register in Catalog
